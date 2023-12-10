@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"strconv"
 
 	"github.com/Grvzard/biligank-v2/backend/crud"
@@ -16,11 +15,9 @@ func RegSearch(r *gin.RouterGroup) {
 			id, err := strconv.ParseUint(pattern, 10, 64)
 			if err == nil {
 				if tmp := crud.StreamerByUid(id); tmp != nil {
-					log.Print(1)
 					results = append(results, tmp...)
 				}
 				if tmp := crud.StreamerByRoomid(id); tmp != nil {
-					log.Print(1)
 					results = append(results, tmp...)
 				}
 			}
