@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Bg-Light {
+  @apply bg-slate-100
+}
