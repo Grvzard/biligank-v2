@@ -15,7 +15,7 @@ type StreamlogRow struct {
 
 func FetchStreamLog(table string, uid uint64) []StreamlogRow {
 	var results []StreamlogRow
-	Sqldb.Table(table).Where("uid = ?", uid).Find(&results)
+	Sqldb.Table(table).Where("uid = ?", uid).Order("_id DESC").Find(&results)
 	if len(results) != 0 {
 		return results
 	}

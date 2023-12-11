@@ -1,6 +1,7 @@
 package api
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/Grvzard/biligank-v2/backend/crud"
@@ -15,8 +16,11 @@ type ReqStreamLog struct {
 
 func RegStreamlog(r *gin.RouterGroup) {
 	r.GET("/streamlog/:uid", func(ctx *gin.Context) {
-		var uid uint64
-		ctx.BindUri(&uid)
+		uid, err := strconv.ParseUint(ctx.Param("uid"), 10, 64)
+		if err != nil {
+			ctx.String(400, "bad request")
+			return
+		}
 		var req ReqStreamLog
 		ctx.BindQuery(&req)
 		var results = []crud.StreamlogRow{}
@@ -30,7 +34,7 @@ func RegStreamlog(r *gin.RouterGroup) {
 		}
 		for to <= from {
 			results = append(results, crud.StreamLogByTstamp(from, uid)...)
-			from -= 86000
+			from -= 86400
 		}
 		ctx.JSON(200, results)
 	})
