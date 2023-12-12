@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, Ref, watch } from 'vue'
+import { inject, ref, Ref, watch } from 'vue'
 import axios from '@/utils/request'
 import { tsToMidnight, tsToString } from '@/utils/time'
+import { onlineStatusE } from '@/types';
 
 const props = defineProps<{
   uid: number
@@ -21,6 +22,7 @@ const toTstamp = fromTstamp - (86400 * 5)
 const dateRange: Ref<[number, number]> = ref([toTstamp * 1000, fromTstamp * 1000])
 const streamlogData: Ref<Streamlog[]> = ref([])
 const isLoading = ref(false)
+const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
 
 function fetchData() {
   console.log(`fetch streamlog(uid:${uid}/ts:${dateRange.value[0]})`)
@@ -36,15 +38,17 @@ function fetchData() {
   })
     .then((resp) => {
       if (resp.status !== 200) {
-        console.log('test: error')
+        onlineStatus.value = onlineStatusE.Error
       }
       else {
-        console.log(`streamlog(${uid}) results: `, resp.data)
-        streamlogData.value = streamlogData.value.concat(resp.data)
+        // console.log(`streamlog(${uid}) results: `, resp.data)
+        onlineStatus.value = onlineStatusE.On
+        // streamlogData.value = streamlogData.value.concat(resp.data)
+        streamlogData.value = resp.data
       }
     })
-    .catch((err) => {
-      console.log(err)
+    .catch((_err) => {
+      onlineStatus.value = onlineStatusE.Off
     })
     .finally(() => {
       isLoading.value = false
@@ -68,16 +72,11 @@ watch(dateRange, () => {
 
 <template>
   <div class="flex flex-row gap-x-4">
-    <VueDatePicker
-      v-model="dateRange" model-type="timestamp" :hide-navigation="['time']" auto-apply range
+    <VueDatePicker v-model="dateRange" model-type="timestamp" :hide-navigation="['time']" auto-apply range
       :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
-      :max-date="new Date(fromTstamp * 1000)" :min-date="new Date('2023-01-01 00:00')"
-      ignore-time-validation prevent-min-max-navigation :markers="dateMarkers"
-    />
-    <button
-      class="border border-slate-300 px-2 rounded-md hover:border-cyan-500"
-      @click="streamlogData.reverse()"
-    >
+      :max-date="new Date(fromTstamp * 1000)" :min-date="new Date('2023-01-01 00:00')" ignore-time-validation
+      prevent-min-max-navigation :markers="dateMarkers" />
+    <button class="border border-slate-300 px-2 rounded-md hover:border-cyan-500" @click="streamlogData.reverse()">
       reverse
     </button>
   </div>
