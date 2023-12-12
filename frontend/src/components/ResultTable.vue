@@ -7,6 +7,14 @@ const props = defineProps<{
   uid: number
 }>()
 
+const dateMarkers = ref([
+  {
+    date: new Date("2023-10-14 14:00"),
+    type: 'dot',
+    tooltip: [{ text: '14-18点宕机', color: 'red' }],
+  }
+])
+
 const uid: number = props.uid
 const fromTstamp = tsToMidnight(Date.now() / 1000, 8)
 const toTstamp = fromTstamp - (86400 * 5)
@@ -58,11 +66,13 @@ watch(dateRange, () => {
 })
 </script>
 
-<template class="">
+<template>
   <div class="flex flex-row gap-x-4">
     <VueDatePicker
       v-model="dateRange" model-type="timestamp" :hide-navigation="['time']" auto-apply range
       :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
+      :max-date="new Date(fromTstamp * 1000)" :min-date="new Date('2023-01-01 00:00')"
+      ignore-time-validation prevent-min-max-navigation :markers="dateMarkers"
     />
     <button
       class="border border-slate-300 px-2 rounded-md hover:border-cyan-500"
