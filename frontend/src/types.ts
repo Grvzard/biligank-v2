@@ -1,0 +1,1 @@
+export enum onlineStatusE { On, Off, Error, Unknown }

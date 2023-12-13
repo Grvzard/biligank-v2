@@ -7,9 +7,9 @@ import (
 
 	"github.com/Grvzard/biligank-v2/backend/api"
 	"github.com/Grvzard/biligank-v2/backend/crud"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	cors "github.com/rs/cors/wrapper/gin"
 )
 
 func main() {
@@ -23,8 +23,8 @@ func main() {
 	cors_s := strings.Split(os.Getenv("API_CORS"), ",")
 	log.Print("CORS: ", cors_s)
 
-	r.Use(cors.New(cors.Config{
-		AllowOrigins: cors_s,
+	r.Use(cors.New(cors.Options{
+		AllowedOrigins: cors_s,
 	}))
 
 	root := r.Group("/")

@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["./dist/*"],
+  "ignorePatterns": ["**/dist/*"],
   "extends": [
     // add more generic rulesets here, such as:
     "eslint:recommended",
