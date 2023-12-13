@@ -23,5 +23,5 @@ func FetchStreamLog(table string, uid uint64) []StreamlogRow {
 }
 
 func StreamLogByTstamp(ts uint32, uid uint64) []StreamlogRow {
-	return FetchStreamLog(time.Unix(int64(ts), 0).Format("2006_01_02"), uid)
+	return FetchStreamLog(time.Unix(int64(ts+8*3600), 0).Format("2006_01_02"), uid)
 }
