@@ -13,7 +13,7 @@ type StreamlogRow struct {
 	Cover      string `json:"cover,omitempty"`
 }
 
-func FetchStreamLog(table string, uid uint64) []StreamlogRow {
+func FetchStreamLog(table string, uid int64) []StreamlogRow {
 	var results []StreamlogRow
 	Sqldb.Table(table).Where("uid = ?", uid).Order("_id DESC").Find(&results)
 	if len(results) != 0 {
@@ -22,6 +22,6 @@ func FetchStreamLog(table string, uid uint64) []StreamlogRow {
 	return []StreamlogRow{}
 }
 
-func StreamLogByTstamp(ts uint32, uid uint64) []StreamlogRow {
+func StreamLogByTstamp(ts uint32, uid int64) []StreamlogRow {
 	return FetchStreamLog(time.Unix(int64(ts+8*3600), 0).Format("2006_01_02"), uid)
 }

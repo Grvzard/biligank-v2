@@ -12,8 +12,8 @@ func RegSearch(r *gin.RouterGroup) {
 		pattern := ctx.Query("q")
 		var results = []crud.StreamerInfo{}
 		if 1 <= len(pattern) && len(pattern) <= 64 {
-			id, err := strconv.ParseUint(pattern, 10, 64)
-			if err == nil {
+			id, err := strconv.ParseInt(pattern, 10, 64)
+			if err == nil && id > 0 {
 				if tmp := crud.StreamerByUid(id); tmp != nil {
 					results = append(results, tmp...)
 				}
