@@ -9,10 +9,10 @@ import (
 )
 
 type StreamerInfo struct {
-	Uid        uint64 `json:"uid" `
+	Uid        int64 `json:"uid" `
 	AreaName   string `json:"area_name" bson:"area_name"`
 	ParentName string `json:"parent_name" bson:"parent_name"`
-	Roomid     uint64 `json:"roomid"`
+	Roomid     int64 `json:"roomid"`
 	Uname      string `json:"uname"`
 }
 
@@ -33,10 +33,10 @@ func streamerByFilter(filter interface{}) []StreamerInfo {
 	}
 }
 
-func StreamerByUid(uid uint64) []StreamerInfo {
+func StreamerByUid(uid int64) []StreamerInfo {
 	return streamerByFilter(bson.M{"uid": uid})
 }
 
-func StreamerByRoomid(roomid uint64) []StreamerInfo {
+func StreamerByRoomid(roomid int64) []StreamerInfo {
 	return streamerByFilter(bson.M{"roomid": roomid})
 }

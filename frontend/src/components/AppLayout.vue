@@ -30,6 +30,7 @@ function statusToColor() {
 }
 const is_searchbar_focused = ref(false)
 const search_text = ref('')
+const results_pattern = ref('')
 const search_results: Ref<StreamerInfo[]> = ref([])
 function doSearch(q: string) {
   axios({
@@ -46,8 +47,10 @@ function doSearch(q: string) {
       else {
         onlineStatus.value = onlineStatusE.On
         console.log(`search(${q}) results: `, resp.data)
-        if (q === search_text.value)
+        if (q === search_text.value) {
           search_results.value = resp.data
+          results_pattern.value = q
+        }
       }
     })
     .catch((_err) => {
@@ -89,6 +92,9 @@ function onInput(_event: any) {
   <!-- AppBody -->
   <div class="mx-10 mt-3 overflow-visible relative z-50">
     <div v-show="is_searchbar_focused" class="absolute w-full flex flex-col shadow-md rounded p-2 bg-white">
+      <span class="pl-3">
+        "{{ results_pattern }}" 搜索结果
+      </span>
       <button v-for="streamer in search_results" :key="streamer.uid" class="p-2 pl-3 rounded hover:bg-gray-200 text-left"
         @mousedown="$emit('selectUid', streamer.uid)">
         {{ streamer.uname }} (房间号: {{ streamer.roomid }})

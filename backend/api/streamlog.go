@@ -16,8 +16,8 @@ type ReqStreamLog struct {
 
 func RegStreamlog(r *gin.RouterGroup) {
 	r.GET("/streamlog/:uid", func(ctx *gin.Context) {
-		uid, err := strconv.ParseUint(ctx.Param("uid"), 10, 64)
-		if err != nil {
+		uid, err := strconv.ParseInt(ctx.Param("uid"), 10, 64)
+		if err != nil || uid < 1 {
 			ctx.String(400, "bad request")
 			return
 		}
