@@ -105,7 +105,7 @@ watch(dateRange, () => {
       <tbody class="bg-white">
         <tr v-for="row in streamlogData" :key="row.last_update">
           <td class="Data-td text-cyan-600">
-            <a target="_blank" :href="row.cover">链接</a>
+            <a target="_blank" rel="noreferrer" :href="row.cover">链接</a>
           </td>
           <td class="Data-td">
             {{ row.title }}
