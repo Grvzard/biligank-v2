@@ -17,8 +17,9 @@ const dateMarkers = ref([
 ])
 
 const uid: number = props.uid
-const fromTstamp = tsToMidnight(Date.now() / 1000, 8)
-const toTstamp = fromTstamp - (86400 * 5)
+const now = Date.now() / 1000
+const fromTstamp = tsToMidnight(now, 8) + 86400 - 60
+const toTstamp = tsToMidnight(now, 8) - (86400 * 6)
 const dateRange: Ref<[number, number]> = ref([toTstamp * 1000, fromTstamp * 1000])
 const streamlogData: Ref<Streamlog[]> = ref([])
 const isLoading = ref(false)
@@ -72,7 +73,7 @@ watch(dateRange, () => {
 
 <template>
   <div class="flex flex-row gap-x-4">
-    <VueDatePicker v-model="dateRange" model-type="timestamp" :hide-navigation="['time']" auto-apply range
+    <VueDatePicker v-model="dateRange" model-type="timestamp" locale="zh-CN" auto-apply range :hide-navigation="['time']"
       :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
       :max-date="new Date(fromTstamp * 1000)" :min-date="new Date('2023-01-01 00:00')" ignore-time-validation
       prevent-min-max-navigation :markers="dateMarkers" />
