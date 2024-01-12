@@ -76,8 +76,12 @@ watch(dateRange, () => {
       :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
       :max-date="new Date(fromTstamp * 1000)" :min-date="new Date('2023-01-01 00:00')" ignore-time-validation
       prevent-min-max-navigation :markers="dateMarkers" />
-    <button class="border border-slate-300 px-2 rounded-md hover:border-cyan-500" @click="streamlogData.reverse()">
-      reverse
+    <button class="border border-slate-300 px-4 rounded-md hover:border-cyan-500" @click="streamlogData.reverse()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5" />
+      </svg>
     </button>
   </div>
   <div class="m-4" />

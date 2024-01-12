@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, Ref } from 'vue'
+import { inject, ref, Ref, computed } from 'vue'
 import AppFooter from './AppFooter.vue'
 import axios from '@/utils/request'
 import { onlineStatusE } from '@/types';
@@ -16,7 +16,7 @@ interface StreamerInfo {
   uname: string
 }
 const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
-function statusToColor() {
+const colorOfStatus = computed(() => {
   switch (onlineStatus.value) {
     case onlineStatusE.On:
       return 'bg-green-500'
@@ -27,7 +27,7 @@ function statusToColor() {
     case onlineStatusE.Unknown:
       return 'bg-gray-400'
   }
-}
+})
 const is_searchbar_focused = ref(false)
 const search_text = ref('')
 const results_pattern = ref('')
@@ -82,8 +82,8 @@ function onInput(_event: any) {
         @focus="is_searchbar_focused = true" @blur="is_searchbar_focused = false" />
       <!-- online status -->
       <span class="inline-flex relative h-3 w-3">
-        <span class="absolute w-full h-full rounded-full animate-ping opacity-75" :class="statusToColor()"></span>
-        <span class="rounded-full w-full h-full" :class="statusToColor()"></span>
+        <span class="absolute w-full h-full rounded-full animate-ping opacity-75" :class="colorOfStatus"></span>
+        <span class="rounded-full w-full h-full" :class="colorOfStatus"></span>
       </span>
     </div>
   </header>
