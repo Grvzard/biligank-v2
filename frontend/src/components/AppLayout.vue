@@ -2,19 +2,12 @@
 import { inject, ref, Ref, computed } from 'vue'
 import AppFooter from './AppFooter.vue'
 import axios from '@/utils/request'
-import { onlineStatusE } from '@/types';
+import { onlineStatusE, StreamerInfo } from '@/types';
 
 const emit = defineEmits<{
-  (event: 'selectUid', uid: number): void
+  (event: 'selectStreamer', streamer: StreamerInfo): void
 }>()
 
-interface StreamerInfo {
-  uid: number
-  area_name: string
-  parent_name: string
-  roomid: number
-  uname: string
-}
 const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
 const colorOfStatus = computed(() => {
   switch (onlineStatus.value) {
@@ -96,7 +89,7 @@ function onInput(_event: any) {
         "{{ results_pattern }}" 搜索结果
       </span>
       <button v-for="streamer in search_results" :key="streamer.uid" class="p-2 pl-3 rounded hover:bg-gray-200 text-left"
-        @mousedown="$emit('selectUid', streamer.uid)">
+        @mousedown="$emit('selectStreamer', streamer)">
         {{ streamer.uname }} (房间号: {{ streamer.roomid }})
       </button>
     </div>

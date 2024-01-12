@@ -2,19 +2,19 @@
 import { ref, Ref } from 'vue'
 import AppLayout from '@/components/AppLayout.vue'
 import ResultTable from '@/components/ResultTable.vue'
+import { StreamerInfo } from '@/types';
 
-const currUid: Ref<number> = ref(0)
+const currStreamer: Ref<StreamerInfo | undefined> = ref()
 
-function onSelectUid(uid: number) {
-  console.log(`select uid: ${uid}`)
-  currUid.value = uid
+function onSelect(streamer: StreamerInfo) {
+  currStreamer.value = streamer
 }
 </script>
 
 <template>
-  <AppLayout @select-uid="onSelectUid">
-    <div v-if="currUid !== 0">
-      <ResultTable :key="currUid" :uid="currUid" />
+  <AppLayout @select-streamer="onSelect">
+    <div v-if="currStreamer !== undefined">
+      <ResultTable :key="currStreamer.uid" :streamer="currStreamer" />
     </div>
     <div v-else>
       ok
