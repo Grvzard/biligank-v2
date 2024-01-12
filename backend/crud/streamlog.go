@@ -22,6 +22,8 @@ func FetchStreamLog(table string, uid int64) []StreamlogRow {
 	return []StreamlogRow{}
 }
 
+var beijing = time.FixedZone("UTC+8", 8*60*60)
+
 func StreamLogByTstamp(ts uint32, uid int64) []StreamlogRow {
-	return FetchStreamLog(time.Unix(int64(ts+8*3600), 0).Format("2006_01_02"), uid)
+	return FetchStreamLog(time.Unix(int64(ts), 0).In(beijing).Format("2006_01_02"), uid)
 }
