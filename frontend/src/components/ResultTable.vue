@@ -83,7 +83,7 @@ watch(dateRange, () => {
       </svg>
     </button>
   </div>
-  <div class="m-4" />
+  <div class="my-4" />
   <div class="pt-3 pb-8 flex flex-col rounded Bg-Light shadow bg-grid-slate-800">
     <table class="table-auto border-collapse w-full shadow-sm">
       <thead>
@@ -137,6 +137,9 @@ watch(dateRange, () => {
         </svg>
       </div>
     </div> -->
+  </div>
+  <div class="p-3 text-sm">
+    * 并非准确时间，会比实际开播晚&下播早几分钟。
   </div>
 </template>
 
