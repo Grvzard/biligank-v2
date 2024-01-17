@@ -68,13 +68,13 @@ function onInput(_event: any) {
   <header class="Bg-Light p-4 shadow-sm overflow-visible">
     <div class="mx-2 flex items-center gap-x-5">
       <!-- logo -->
-      <div class="text-2xl font-bold italic select-none">
-        <span class="text-cyan-600">s</span>
-        <span class="text-slate-800">log</span>
+      <div class="text-2xl select-none">
+        <span class="text-cyan-600">直播</span>
+        <span class="text-slate-800">日志</span>
       </div>
       <!-- search bar -->
       <input v-model="search_text" type="text"
-        class="p-2 pl-4 ml-1 bg-slate-100 border border-slate-300 grow rounded-md focus:outline-none focus:bg-white hover:bg-white transition-colors"
+        class="py-2 px-4 mx-auto bg-slate-100 border border-slate-300 rounded-md focus:outline-none focus:bg-white hover:bg-white transition-colors"
         placeholder="uid / 房间号" @input="onInput" @focus="is_searchbar_focused = true"
         @blur="is_searchbar_focused = false" />
       <!-- donate link -->
@@ -99,23 +99,27 @@ function onInput(_event: any) {
   <!-- AppHeader -->
 
   <!-- AppBody -->
-  <div class="mx-10 mt-3 overflow-visible relative z-50">
-    <div v-show="is_searchbar_focused" class="absolute w-full shadow-md rounded p-2 bg-white">
-      <div v-if="isLoading" class="animate-pulse bg-slate-200 h-4 w-24 my-1 mx-2 rounded"></div>
-      <div v-else class="flex flex-col">
-        <span class="pl-3">
-          "{{ results_pattern }}" 搜索结果
-        </span>
-        <button v-for="streamer in search_results" :key="streamer.uid"
-          class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="$emit('selectStreamer', streamer)">
-          {{ streamer.uname }} (房间号: {{ streamer.roomid }})
-        </button>
+  <div class="flex mx-10 mt-3 mb-20 relative">
+    <div class="absolute z-50 w-full">
+      <div v-show="is_searchbar_focused" class="mx-auto max-w-sm shadow-md rounded p-2 bg-white">
+        <div v-if="isLoading" class="animate-pulse bg-slate-200 h-4 w-28 my-1 mx-2 rounded"></div>
+        <div v-else class="flex flex-col">
+          <span class="pl-3 py-1">
+            "{{ results_pattern }}" 搜索结果
+          </span>
+          <button v-for="streamer in search_results" :key="streamer.uid"
+            class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="$emit('selectStreamer', streamer)">
+            {{ streamer.uname }} (房间号: {{ streamer.roomid }})
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mx-10 my-8 mb-20">
-    <slot />
+    <div class="my-5 w-full">
+      <div class="mx-auto max-w-5xl">
+        <slot />
+      </div>
+    </div>
   </div>
   <!-- AppBody -->
 
