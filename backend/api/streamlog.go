@@ -31,6 +31,10 @@ func RegStreamlog(r *gin.RouterGroup) {
 		}
 		if to == 0 {
 			to = from
+		} else if to <= 1672488000 {
+			// 2023-01-01T00:00:00+12:00
+			ctx.String(400, "bad request")
+			return
 		}
 		for to <= from {
 			results = append(results, crud.StreamLogByTstamp(from, uid)...)
