@@ -2,6 +2,7 @@
 import { inject, ref, Ref, watch } from 'vue'
 import axios from '@/utils/request'
 import { tsToMidnight, tsToString } from '@/utils/time'
+import { normalizeLink } from '@/utils/link'
 import { onlineStatusE, StreamLog, StreamerInfo } from '@/types';
 
 const props = defineProps<{
@@ -32,7 +33,7 @@ const isLoading = ref(false)
 const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
 
 function fetchData() {
-  console.log(`fetch streamlog(uid:${uid}/ts:${dateRange.value[0]})`)
+  // console.log(`fetch streamlog(uid:${uid}/ts:${dateRange.value[0]})`)
   isLoading.value = true
 
   axios({
@@ -108,7 +109,7 @@ watch(dateRange, () => {
       <tbody class="bg-white">
         <tr v-for="row in streamlogData" :key="row.last_update">
           <td class="Data-td text-cyan-600">
-            <a target="_blank" rel="noreferrer" :href="row.cover">链接</a>
+            <a target="_blank" rel="noreferrer" :href="normalizeLink(row.cover)">链接</a>
           </td>
           <td class="Data-td">
             {{ row.title }}
