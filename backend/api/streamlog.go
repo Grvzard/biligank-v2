@@ -23,23 +23,18 @@ func RegStreamlog(r *gin.RouterGroup) {
 		}
 		var req ReqStreamLog
 		ctx.BindQuery(&req)
-		var results = []crud.StreamlogRow{}
 		from := req.From
 		to := req.To
+
+		ts_now := uint32(time.Now().Unix())
 		if from == 0 {
-			from = uint32(time.Now().Unix())
+			from = ts_now
+		} else {
+			from = min(from, ts_now)
 		}
-		if to == 0 {
-			to = from
-		} else if to <= 1672488000 {
-			// 2023-01-01T00:00:00+12:00
-			ctx.String(400, "bad request")
-			return
-		}
-		for to <= from {
-			results = append(results, crud.StreamLogByTstamp(from, uid)...)
-			from -= 86400
-		}
-		ctx.JSON(200, results)
+		// 2023-01-01T00:00:00+8:00
+		to = max(to, 1672502400)
+
+		ctx.JSON(200, crud.StreamLogByTstampSlice(uid, from, to))
 	})
 }

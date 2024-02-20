@@ -4,8 +4,10 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/Grvzard/biligank-v2/backend/api"
+	"github.com/Grvzard/biligank-v2/backend/config"
 	"github.com/Grvzard/biligank-v2/backend/crud"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -14,6 +16,13 @@ import (
 
 func main() {
 	godotenv.Load("config.env")
+
+	st1, err := time.Parse("2006_01", os.Getenv("API_STAGE1"))
+	if err != nil {
+		panic(err)
+	}
+	var beijing = time.FixedZone("UTC+8", 8*60*60)
+	config.GlobalConfig.Stage1 = st1.In(beijing)
 
 	crud.InitDatabase()
 	defer crud.DestoryDatabase()
