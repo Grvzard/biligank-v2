@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.13.1
 	gorm.io/driver/mysql v1.5.2
-	gorm.io/gorm v1.25.6
+	gorm.io/gorm v1.25.8
 )
 
 require github.com/rs/cors v1.10.1 // indirect
