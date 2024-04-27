@@ -11,9 +11,24 @@ const props = defineProps<{
 
 const dateMarkers = ref([
   {
-    date: new Date("2023-10-14 14:00"),
+    date: new Date("2023-10-14T14:00:00+08:00"),
     type: 'dot',
     tooltip: [{ text: '14-18点宕机', color: 'red' }],
+  },
+  {
+    date: new Date("2024-04-25T15:00:00+08:00"),
+    type: 'dot',
+    tooltip: [{ text: '15点起宕机', color: 'red' }],
+  },
+  {
+    date: new Date("2024-04-26T00:00:00+08:00"),
+    type: 'dot',
+    tooltip: [{ text: '宕机', color: 'red' }],
+  },
+  {
+    date: new Date("2024-04-27T18:00:00+08:00"),
+    type: 'dot',
+    tooltip: [{ text: '宕机至18点恢复', color: 'red' }],
   }
 ])
 
@@ -72,8 +87,8 @@ watch(dateRange, () => {
 
 <template>
   <div class="flex flex-row gap-x-4">
-    <VueDatePicker v-model="dateRange" model-type="timestamp" locale="zh-CN" auto-apply range :hide-navigation="['time']"
-      :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
+    <VueDatePicker v-model="dateRange" model-type="timestamp" locale="zh-CN" auto-apply range
+      :hide-navigation="['time']" :clearable="false" input-class-name="focus:outline-none" menu-class-name="shadow-md"
       :max-date="new Date(fromTstamp * 1000)" :min-date="DatePickerMinDate" ignore-time-validation
       prevent-min-max-navigation :markers="dateMarkers" />
     <button class="border border-slate-300 px-4 rounded-md hover:border-cyan-500" @click="streamlogData.reverse()">
