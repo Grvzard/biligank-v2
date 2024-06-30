@@ -42,7 +42,7 @@ devDependencies:
     version: 5.3.1
   vue-tsc:
     specifier: ^2.0.22
-    version: 2.0.22(typescript@5.5.2)
+    version: 2.0.24(typescript@5.5.2)
 
 packages:
 
@@ -556,20 +556,20 @@ packages:
       vue: 3.4.30(typescript@5.5.2)
     dev: true
 
-  /@volar/language-core@2.3.4:
-    resolution: {integrity: sha512-wXBhY11qG6pCDAqDnbBRFIDSIwbqkWI7no+lj5+L7IlA7HRIjRP7YQLGzT0LF4lS6eHkMSsclXqy9DwYJasZTQ==}
+  /@volar/language-core@2.4.0-alpha.2:
+    resolution: {integrity: sha512-BmVAHEHO6n8g958n1/S6cR9uf76YGlrp/D6rYSTBtdLKrS4CVK9A2MjKf+gpbj+A8JCGVA/16N4atPZZmI7kVw==}
     dependencies:
-      '@volar/source-map': 2.3.4
+      '@volar/source-map': 2.4.0-alpha.2
     dev: true
 
-  /@volar/source-map@2.3.4:
-    resolution: {integrity: sha512-C+t63nwcblqLIVTYXaVi/+gC8NukDaDIQI72J3R7aXGvtgaVB16c+J8Iz7/VfOy7kjYv7lf5GhBny6ACw9fTGQ==}
+  /@volar/source-map@2.4.0-alpha.2:
+    resolution: {integrity: sha512-hnCOUx/zuvpDeh0YNC2bnQDEzzIr+tYzphpwTvUV4o4wXCAmyjNYqBR8ElR1s9O9pQF3n9CqLlYRYOe7RQnTHg==}
     dev: true
 
-  /@volar/typescript@2.3.4:
-    resolution: {integrity: sha512-acCvt7dZECyKcvO5geNybmrqOsu9u8n5XP1rfiYsOLYGPxvHRav9BVmEdRyZ3vvY6mNyQ1wLL5Hday4IShe17w==}
+  /@volar/typescript@2.4.0-alpha.2:
+    resolution: {integrity: sha512-CPqp+QLOQRlaEW9jXXq6grr6v/vZWpsC6yv7TuKEHMly9K0m2afn31VI19/rohPFBUXBB7YnmBFbZyH4FT4Pmg==}
     dependencies:
-      '@volar/language-core': 2.3.4
+      '@volar/language-core': 2.4.0-alpha.2
       path-browserify: 1.0.1
       vscode-uri: 3.0.8
     dev: true
@@ -583,11 +583,28 @@ packages:
       estree-walker: 2.0.2
       source-map-js: 1.2.0
 
+  /@vue/compiler-core@3.4.31:
+    resolution: {integrity: sha512-skOiodXWTV3DxfDhB4rOf3OGalpITLlgCeOwb+Y9GJpfQ8ErigdBUHomBzvG78JoVE8MJoQsb+qhZiHfKeNeEg==}
+    dependencies:
+      '@babel/parser': 7.24.7
+      '@vue/shared': 3.4.31
+      entities: 4.5.0
+      estree-walker: 2.0.2
+      source-map-js: 1.2.0
+    dev: true
+
   /@vue/compiler-dom@3.4.30:
     resolution: {integrity: sha512-+16Sd8lYr5j/owCbr9dowcNfrHd+pz+w2/b5Lt26Oz/kB90C9yNbxQ3bYOvt7rI2bxk0nqda39hVcwDFw85c2Q==}
     dependencies:
       '@vue/compiler-core': 3.4.30
       '@vue/shared': 3.4.30
+
+  /@vue/compiler-dom@3.4.31:
+    resolution: {integrity: sha512-wK424WMXsG1IGMyDGyLqB+TbmEBFM78hIsOJ9QwUVLGrcSk0ak6zYty7Pj8ftm7nEtdU/DGQxAXp0/lM/2cEpQ==}
+    dependencies:
+      '@vue/compiler-core': 3.4.31
+      '@vue/shared': 3.4.31
+    dev: true
 
   /@vue/compiler-sfc@3.4.30:
     resolution: {integrity: sha512-8vElKklHn/UY8+FgUFlQrYAPbtiSB2zcgeRKW7HkpSRn/JjMRmZvuOtwDx036D1aqKNSTtXkWRfqx53Qb+HmMg==}
@@ -608,19 +625,19 @@ packages:
       '@vue/compiler-dom': 3.4.30
       '@vue/shared': 3.4.30
 
-  /@vue/language-core@2.0.22(typescript@5.5.2):
-    resolution: {integrity: sha512-dNTAAtEOuMiz7N1s5tKpypnVVCtawxVSF5BukD0ELcYSw+DSbrSlYYSw8GuwvurodCeYFSHsmslE+c2sYDNoiA==}
+  /@vue/language-core@2.0.24(typescript@5.5.2):
+    resolution: {integrity: sha512-997YD6Lq/66LXr3ZOLNxDCmyn13z9NP8LU1UZn9hGCDWhzlbXAIP0hOgL3w3x4RKEaWTaaRtsHP9DzHvmduruQ==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@volar/language-core': 2.3.4
-      '@vue/compiler-dom': 3.4.30
-      '@vue/shared': 3.4.30
+      '@volar/language-core': 2.4.0-alpha.2
+      '@vue/compiler-dom': 3.4.31
+      '@vue/shared': 3.4.31
       computeds: 0.0.1
-      minimatch: 9.0.4
+      minimatch: 9.0.5
       muggle-string: 0.4.1
       path-browserify: 1.0.1
       typescript: 5.5.2
@@ -657,6 +674,10 @@ packages:
 
   /@vue/shared@3.4.30:
     resolution: {integrity: sha512-CLg+f8RQCHQnKvuHY9adMsMaQOcqclh6Z5V9TaoMgy0ut0tz848joZ7/CYFFyF/yZ5i2yaw7Fn498C+CNZVHIg==}
+
+  /@vue/shared@3.4.31:
+    resolution: {integrity: sha512-Yp3wtJk//8cO4NItOPpi3QkLExAr/aLBGZMmTtW9WpdwBCJpRM6zj9WgWktXAl8IDIozwNMByT45JP3tO3ACWA==}
+    dev: true
 
   /@vuepic/vue-datepicker@8.8.0(vue@3.4.30):
     resolution: {integrity: sha512-I9c0EBF+zsCXEGRM/2D8M8N3Jafr0/KftxdLqbbn2DZ1RfVDefUrWZaGDrp8XwWfowEw7963ES59NPKC+nkgdA==}
@@ -1251,7 +1272,7 @@ packages:
     dependencies:
       foreground-child: 3.2.1
       jackspeak: 3.4.0
-      minimatch: 9.0.4
+      minimatch: 9.0.5
       minipass: 7.1.2
       package-json-from-dist: 1.0.0
       path-scurry: 1.11.1
@@ -1466,8 +1487,8 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimatch@9.0.4:
-    resolution: {integrity: sha512-KqWh+VchfxcMNRAJjj2tnsSJdNbHsVgnkBhTNrW7AjVo6OvLtxw8zfT9oLw1JSohlFzJ8jCoTgaoXvJ+kHt6fw==}
+  /minimatch@9.0.5:
+    resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
@@ -2020,14 +2041,14 @@ packages:
       he: 1.2.0
     dev: true
 
-  /vue-tsc@2.0.22(typescript@5.5.2):
-    resolution: {integrity: sha512-lMBIwPBO0sxCcmvu45yt1b035AaQ8/XSXQDk8m75y4j0jSXY/y/XzfEtssQ9JMS47lDaR10O3/926oCs8OeGUw==}
+  /vue-tsc@2.0.24(typescript@5.5.2):
+    resolution: {integrity: sha512-1qi4P8L7yS78A7OJ7CDDxUIZPD6nVxoQEgX3DkRZNi1HI1qOfzOJwQlNpmwkogSVD6S/XcanbW9sktzpSxz6rA==}
     hasBin: true
     peerDependencies:
-      typescript: '*'
+      typescript: '>=5.0.0'
     dependencies:
-      '@volar/typescript': 2.3.4
-      '@vue/language-core': 2.0.22(typescript@5.5.2)
+      '@volar/typescript': 2.4.0-alpha.2
+      '@vue/language-core': 2.0.24(typescript@5.5.2)
       semver: 7.6.2
       typescript: 5.5.2
     dev: true
