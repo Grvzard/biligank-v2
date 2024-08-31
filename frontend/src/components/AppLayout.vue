@@ -109,7 +109,8 @@ function onInput(_event: any) {
           </span>
           <button v-for="streamer in search_results" :key="streamer.uid"
             class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="$emit('selectStreamer', streamer)">
-            {{ streamer.uname }} (房间号: {{ streamer.roomid }})
+            {{ streamer.uname }} (房间号: {{ streamer.roomid }}
+            {{ streamer.short_roomid != 0 ? " / " + streamer.short_roomid : "" }})
           </button>
         </div>
       </div>

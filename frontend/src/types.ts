@@ -14,6 +14,7 @@ export interface StreamerInfo {
   area_name: string
   parent_name: string
   roomid: number
+  short_roomid: number
   uname: string
   first_log_ts: number
 }
