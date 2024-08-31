@@ -2,6 +2,9 @@ package crud
 
 import (
 	"context"
+	_ "embed"
+	"encoding/json"
+	"fmt"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -13,6 +16,12 @@ import (
 var Client *mongo.Client
 var Coll *mongo.Collection
 var Sqldb *gorm.DB
+
+//go:embed bl-roomid-short.json
+var shortRoomidJson []byte
+
+// []uint32 actually
+var ShortRoomid []int64
 
 func InitDatabase() {
 	uri := os.Getenv("API_MONGO_URI")
@@ -30,6 +39,10 @@ func InitDatabase() {
 	Sqldb, err = gorm.Open(mysql.Open(sql_dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
+	}
+
+	if err := json.Unmarshal(shortRoomidJson, &ShortRoomid); err != nil {
+		panic(fmt.Sprintf("Failed to parse embedded JSON file: %v", err))
 	}
 }
 

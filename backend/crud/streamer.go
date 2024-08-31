@@ -19,12 +19,13 @@ type StreamerInfoDb struct {
 }
 
 type StreamerInfo struct {
-	Uid        int64  `json:"uid"`
-	AreaName   string `json:"area_name"`
-	ParentName string `json:"parent_name"`
-	Roomid     int64  `json:"roomid"`
-	Uname      string `json:"uname"`
-	FirstLogTs uint32 `json:"first_log_ts"`
+	Uid         int64  `json:"uid"`
+	AreaName    string `json:"area_name"`
+	ParentName  string `json:"parent_name"`
+	Roomid      int64  `json:"roomid"`
+	ShortRoomid int64  `json:"short_roomid"`
+	Uname       string `json:"uname"`
+	FirstLogTs  uint32 `json:"first_log_ts"`
 }
 
 func streamerByFilter(filter interface{}) []StreamerInfo {
@@ -46,12 +47,13 @@ func streamerByFilter(filter interface{}) []StreamerInfo {
 	}
 	for _, e := range results_db {
 		results = append(results, StreamerInfo{
-			Uid:        e.Uid,
-			AreaName:   e.AreaName,
-			ParentName: e.ParentName,
-			Roomid:     e.Roomid,
-			Uname:      e.Uname,
-			FirstLogTs: uint32(e.Id.Timestamp().Unix()),
+			Uid:         e.Uid,
+			AreaName:    e.AreaName,
+			ParentName:  e.ParentName,
+			Roomid:      e.Roomid,
+			ShortRoomid: 0,
+			Uname:       e.Uname,
+			FirstLogTs:  uint32(e.Id.Timestamp().Unix()),
 		})
 	}
 	return results
@@ -63,4 +65,30 @@ func StreamerByUid(uid int64) []StreamerInfo {
 
 func StreamerByRoomid(roomid int64) []StreamerInfo {
 	return streamerByFilter(bson.M{"roomid": roomid})
+}
+
+func StreamerBy(id int64) []StreamerInfo {
+	var results []StreamerInfo
+	if id <= 1000 {
+		results = StreamerByUid(id)
+		origin_roomid := ShortRoomid[id]
+		// 0 means none, 1 ~ 1000 are reserved
+		if origin_roomid > 1000 {
+			if tmp := StreamerByRoomid(origin_roomid); tmp != nil {
+				// should be only 1 element
+				for _, e := range tmp {
+					e.ShortRoomid = id
+					results = append(results, e)
+				}
+			}
+		}
+	} else {
+		results = streamerByFilter(bson.M{
+			"$or": []bson.M{
+				{"uid": id},
+				{"roomid": id},
+			},
+		})
+	}
+	return results
 }

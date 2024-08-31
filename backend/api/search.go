@@ -10,19 +10,18 @@ import (
 func RegSearch(r *gin.RouterGroup) {
 	r.GET("/search", func(ctx *gin.Context) {
 		pattern := ctx.Query("q")
-		var results = []crud.StreamerInfo{}
+		var results []crud.StreamerInfo
 		if 1 <= len(pattern) && len(pattern) <= 64 {
 			id, err := strconv.ParseInt(pattern, 10, 64)
 			if err == nil && id > 0 {
-				if tmp := crud.StreamerByUid(id); tmp != nil {
-					results = append(results, tmp...)
-				}
-				if tmp := crud.StreamerByRoomid(id); tmp != nil {
-					results = append(results, tmp...)
-				}
+				results = crud.StreamerBy(id)
 			}
 			// StreamerByUname(pattern)
 		}
-		ctx.JSON(200, results)
+		if results != nil {
+			ctx.JSON(200, results)
+		} else {
+			ctx.JSON(200, []crud.StreamerInfo{})
+		}
 	})
 }
