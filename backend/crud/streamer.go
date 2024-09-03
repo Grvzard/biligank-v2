@@ -10,12 +10,13 @@ import (
 )
 
 type StreamerInfoDb struct {
-	Uid        int64
-	AreaName   string `bson:"area_name"`
-	ParentName string `bson:"parent_name"`
-	Roomid     int64
-	Uname      string
-	Id         primitive.ObjectID `bson:"_id"`
+	Uid         int64
+	AreaName    string `bson:"area_name"`
+	ParentName  string `bson:"parent_name"`
+	Roomid      int64
+	ShortRoomid int64 `bson:"shortid"`
+	Uname       string
+	Id          primitive.ObjectID `bson:"_id"`
 }
 
 type StreamerInfo struct {
@@ -51,7 +52,7 @@ func streamerByFilter(filter interface{}) []StreamerInfo {
 			AreaName:    e.AreaName,
 			ParentName:  e.ParentName,
 			Roomid:      e.Roomid,
-			ShortRoomid: 0,
+			ShortRoomid: e.ShortRoomid,
 			Uname:       e.Uname,
 			FirstLogTs:  uint32(e.Id.Timestamp().Unix()),
 		})
@@ -59,36 +60,20 @@ func streamerByFilter(filter interface{}) []StreamerInfo {
 	return results
 }
 
-func StreamerByUid(uid int64) []StreamerInfo {
-	return streamerByFilter(bson.M{"uid": uid})
-}
+// func StreamerByUid(uid int64) []StreamerInfo {
+// 	return streamerByFilter(bson.M{"uid": uid})
+// }
 
-func StreamerByRoomid(roomid int64) []StreamerInfo {
-	return streamerByFilter(bson.M{"roomid": roomid})
-}
+// func StreamerByRoomid(roomid int64) []StreamerInfo {
+// 	return streamerByFilter(bson.M{"roomid": roomid})
+// }
 
 func StreamerBy(id int64) []StreamerInfo {
-	var results []StreamerInfo
-	if id <= 1000 {
-		results = StreamerByUid(id)
-		origin_roomid := ShortRoomid[id]
-		// 0 means none, 1 ~ 1000 are reserved
-		if origin_roomid > 1000 {
-			if tmp := StreamerByRoomid(origin_roomid); tmp != nil {
-				// should be only 1 element
-				for _, e := range tmp {
-					e.ShortRoomid = id
-					results = append(results, e)
-				}
-			}
-		}
-	} else {
-		results = streamerByFilter(bson.M{
-			"$or": []bson.M{
-				{"uid": id},
-				{"roomid": id},
-			},
-		})
-	}
-	return results
+	return streamerByFilter(bson.M{
+		"$or": []bson.M{
+			{"uid": id},
+			{"roomid": id},
+			{"shortid": id},
+		},
+	})
 }
