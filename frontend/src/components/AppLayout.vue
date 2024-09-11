@@ -61,6 +61,9 @@ function searchDebounce(q: string) {
 function onInput(_event: any) {
   setTimeout(searchDebounce, 300, search_text.value)
 }
+function onClickResult(streamer: StreamerInfo) {
+  emit('selectStreamer', streamer)
+}
 </script>
 
 <template>
@@ -108,7 +111,7 @@ function onInput(_event: any) {
             "{{ results_pattern }}" 搜索结果
           </span>
           <button v-for="streamer in search_results" :key="streamer.uid"
-            class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="$emit('selectStreamer', streamer)">
+            class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="onClickResult(streamer)">
             {{ streamer.uname }} (房间号: {{ streamer.roomid }}
             {{ streamer.short_roomid != 0 ? " / " + streamer.short_roomid : "" }})
           </button>
