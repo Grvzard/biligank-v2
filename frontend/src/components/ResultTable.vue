@@ -124,7 +124,8 @@ watch(dateRange, () => {
       <tbody class="bg-white">
         <tr v-for="row in streamlogData" :key="row.last_update">
           <td class="Data-td text-cyan-600">
-            <a target="_blank" rel="noreferrer" :href="normalizeLink(row.cover)">链接</a>
+            <!-- 链接后的 hash tag 用于方便区分不同的封面链接 -->
+            <a target="_blank" rel="noreferrer" :href="normalizeLink(row.cover)">链接#{{ row.cover.slice(-6, -4) }}</a>
           </td>
           <td class="Data-td">
             {{ row.title }}
