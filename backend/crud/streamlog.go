@@ -15,14 +15,16 @@ type StreamlogRow struct {
 	Cover      string `json:"cover,omitempty"`
 }
 
-func FetchStreamLog(table string, uid int64, stop *time.Time) []StreamlogRow {
+func FetchStreamLog(table string, uid int64, to_ *time.Time, from_ *time.Time) []StreamlogRow {
 	results := []StreamlogRow{}
-	if stop == nil {
-		Sqldb.Table(table).Where("uid = ?", uid).Order("_id DESC").Find(&results)
-	} else {
-		stopTstamp := uint32(stop.Unix())
-		Sqldb.Table(table).Where("uid = ?", uid).Where("last_update >= ?", stopTstamp).Order("_id DESC").Find(&results)
+	sql := Sqldb.Table(table).Where("uid = ?", uid)
+	if to_ != nil {
+		sql = sql.Where("last_update >= ?", uint32(to_.Unix()))
 	}
+	if from_ != nil {
+		sql = sql.Where("last_update <= ?", uint32(from_.Unix()))
+	}
+	sql.Order("_id DESC").Find(&results)
 	return results
 }
 
@@ -36,22 +38,33 @@ func StreamLogByTstampSlice(uid int64, from uint32, to uint32) []StreamlogRow {
 	step := 1
 	// recent data are divided into tables by day (in tables like 2024_02_01)
 	// data prior to Stage1 are archived monthly (in tables like 2023_10)
+	is_orig_from := true
+	// critical values: to_ == from_ -> STOP
 	for to_.Before(from_) {
+		// critical values: from_ == Stage1 -> step 1
 		if from_.Before(config.GlobalConfig.Stage1) {
 			step = 2
 		}
 		if step == 1 {
 			tablename := from_.Format("2006_01_02")
+			// here we retrieve all entries regardless of the value of from/to
+			results = append(results, FetchStreamLog(tablename, uid, nil, nil)...)
+
 			from_ = from_.AddDate(0, 0, -1)
-			results = append(results, FetchStreamLog(tablename, uid, nil)...)
+			is_orig_from = false
 		} else if step == 2 {
 			tablename := from_.Format("2006_01")
-			from_ = from_.AddDate(0, -1, 0)
-			stop := to_
-			if from_.After(to_) {
-				stop = from_
+			// the search_to here might be smaller than the smallest value in the table,
+			// which introduces an overhead, but that's okay
+			search_to := &to_
+			search_from := &from_
+			if !is_orig_from {
+				search_from = nil
 			}
-			results = append(results, FetchStreamLog(tablename, uid, &stop)...)
+			results = append(results, FetchStreamLog(tablename, uid, search_to, search_from)...)
+
+			from_ = from_.AddDate(0, -1, 0)
+			is_orig_from = false
 		}
 	}
 	return results
