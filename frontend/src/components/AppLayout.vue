@@ -5,9 +5,10 @@ import axios from '@/utils/request'
 import { onlineStatusE, StreamerInfo } from '@/types';
 
 const emit = defineEmits<{
-  (event: 'selectStreamer', streamer: StreamerInfo): void
+  (event: 'selectStreamer', streamer: StreamerInfo, doSubscribe: boolean): void
 }>()
 
+const isSubscribing = ref(false)
 const donateLink = import.meta.env.VITE_DONATE_LINK
 const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
 const colorOfStatus = computed(() => {
@@ -62,7 +63,12 @@ function onInput(_event: any) {
   setTimeout(searchDebounce, 300, search_text.value)
 }
 function onClickResult(streamer: StreamerInfo) {
-  emit('selectStreamer', streamer)
+  isSubscribing.value = false
+  emit('selectStreamer', streamer, false)
+}
+function onClickSubscribe(streamer: StreamerInfo) {
+  isSubscribing.value = true
+  emit('selectStreamer', streamer, true)
 }
 </script>
 
@@ -72,8 +78,14 @@ function onClickResult(streamer: StreamerInfo) {
     <div class="mx-2 flex items-center gap-x-5">
       <!-- logo -->
       <div class="text-2xl select-none">
-        <span class="text-cyan-600">直播</span>
-        <span class="text-slate-800">日志</span>
+        <div v-if="!isSubscribing">
+          <span class="text-cyan-600">直播</span>
+          <span class="text-slate-800">日志</span>
+        </div>
+        <div v-else>
+          <span class="text-cyan-600">开播</span>
+          <span class="text-slate-800">推送</span>
+        </div>
       </div>
       <!-- search bar -->
       <input v-model="search_text" type="text"
@@ -104,11 +116,19 @@ function onClickResult(streamer: StreamerInfo) {
           <span class="pl-3 py-1">
             "{{ results_pattern }}" 搜索结果
           </span>
-          <button v-for="streamer in search_results" :key="streamer.uid"
-            class="p-2 pl-3 rounded hover:bg-gray-200 text-left" @mousedown="onClickResult(streamer)">
-            {{ streamer.uname }} (房间号: {{ streamer.roomid }}
-            {{ streamer.short_roomid != 0 ? " / " + streamer.short_roomid : "" }})
-          </button>
+          <div v-for="streamer in search_results" :key="streamer.uid" class="flex">
+            <button class="px-3 rounded hover:bg-gray-200 items-center" @mousedown="onClickSubscribe(streamer)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
+                viewBox="0 0 16 16">
+                <path
+                  d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+              </svg>
+            </button>
+            <button class="p-2 rounded hover:bg-gray-200 text-left grow" @mousedown="onClickResult(streamer)">
+              {{ streamer.uname }} (房间号: {{ streamer.roomid }}
+              {{ streamer.short_roomid != 0 ? " / " + streamer.short_roomid : "" }})
+            </button>
+          </div>
         </div>
       </div>
     </div>
