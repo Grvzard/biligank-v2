@@ -23,13 +23,13 @@ const colorOfStatus = computed(() => {
       return 'bg-gray-400'
   }
 })
+// isLoading = !(search_results.value == results_pattern.value)
 const isLoading = ref(false)
 const is_searchbar_focused = ref(false)
 const search_text = ref('')
 const results_pattern = ref('')
 const search_results: Ref<StreamerInfo[]> = ref([])
 function doSearch(q: string) {
-  isLoading.value = true
   axios({
     method: 'get',
     url: '/search',
@@ -60,7 +60,13 @@ function searchDebounce(q: string) {
     doSearch(q)
 }
 function onInput(_event: any) {
-  setTimeout(searchDebounce, 300, search_text.value)
+  search_text.value = search_text.value.replace(/[^0-9]/g, '')
+  if (search_text.value != results_pattern.value) {
+    isLoading.value = true
+    setTimeout(searchDebounce, 300, search_text.value)
+  } else {
+    isLoading.value = false
+  }
 }
 function onClickResult(streamer: StreamerInfo) {
   isSubscribing.value = false
