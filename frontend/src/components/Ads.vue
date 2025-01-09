@@ -12,7 +12,7 @@ const ads: Ref<AdInfo[]> = ref([])
 const adIdx = computed(() => {
   return Math.floor(Math.random() * ads.value.length)
 })
-apiAds.get("/file/ads.json?p=biligank/")
+apiAds.get("/ads.json")
   .then(
     (resp) => {
       if (resp.status === 200) {
