@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@vuepic/vue-datepicker':
         specifier: ^9.0.1
-        version: 9.0.1(vue@3.4.35(typescript@5.5.4))
+        version: 9.0.3(vue@3.4.35(typescript@5.5.4))
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -418,8 +418,8 @@ packages:
   '@vue/shared@3.4.35':
     resolution: {integrity: sha512-hvuhBYYDe+b1G8KHxsQ0diDqDMA8D9laxWZhNAjE83VZb5UDaXl9Xnz7cGdDSyiHM90qqI/CyGMcpBpiDy6VVQ==}
 
-  '@vuepic/vue-datepicker@9.0.1':
-    resolution: {integrity: sha512-5sSdwib5cY8cE4Y7SCh+Zemfp+U/m6BDcgaPwd5Vmdv5LAASyV0wugn9sTb6NWX0sIQEdrGDl/RmD9EjcIke3A==}
+  '@vuepic/vue-datepicker@9.0.3':
+    resolution: {integrity: sha512-OtCAKG+CkVBpCwnPx7/BGRF+/z+jDzNl2cMBpcr8j2NkAN+13xkUt7sctbOVKbG/jhuXtKoUSedI69e0cDXPXw==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       vue: '>=3.2.0'
@@ -1549,7 +1549,7 @@ snapshots:
 
   '@vue/shared@3.4.35': {}
 
-  '@vuepic/vue-datepicker@9.0.1(vue@3.4.35(typescript@5.5.4))':
+  '@vuepic/vue-datepicker@9.0.3(vue@3.4.35(typescript@5.5.4))':
     dependencies:
       date-fns: 3.6.0
       vue: 3.4.35(typescript@5.5.4)
