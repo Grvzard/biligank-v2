@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.14.0
 	gorm.io/driver/mysql v1.5.5
-	gorm.io/gorm v1.25.8
+	gorm.io/gorm v1.25.12
 )
 
 require (
