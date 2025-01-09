@@ -9,7 +9,7 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
-    "@vuepic/vue-datepicker": "^9.0.1",
+    "@vuepic/vue-datepicker": "^9.0.3",
     "axios": "^1.7.2",
     "vue": "^3.4.35"
   },
