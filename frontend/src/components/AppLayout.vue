@@ -9,7 +9,7 @@ const emit = defineEmits<{
 }>()
 
 const isSubscribing = ref(false)
-const donateLink = import.meta.env.VITE_DONATE_LINK
+// const donateLink = import.meta.env.VITE_DONATE_LINK
 const onlineStatus = inject('onlineStatus') as Ref<onlineStatusE>
 const colorOfStatus = computed(() => {
   switch (onlineStatus.value) {
@@ -99,11 +99,11 @@ function onClickSubscribe(streamer: StreamerInfo) {
         placeholder="uid / 房间号" @input="onInput" @focus="is_searchbar_focused = true"
         @blur="is_searchbar_focused = false" />
       <!-- donate link -->
-      <button class="w-9 h-9 inline-flex items-center justify-center rounded-full transition-colors hover:bg-slate-300">
+      <!-- <button class="w-9 h-9 inline-flex items-center justify-center rounded-full transition-colors hover:bg-slate-300">
         <a target="_blank" rel="noreferrer" :href="donateLink">
           <img class="w-7 h-7" src="@/assets/elec.png" />
         </a>
-      </button>
+      </button> -->
       <!-- online status -->
       <span class="inline-flex relative h-3 w-3">
         <span class="absolute w-full h-full rounded-full animate-ping opacity-75" :class="colorOfStatus"></span>
