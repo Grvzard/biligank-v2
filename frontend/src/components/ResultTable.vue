@@ -29,6 +29,11 @@ const dateMarkers = ref([
     date: new Date("2024-04-27T18:00:00+08:00"),
     type: 'dot',
     tooltip: [{ text: '宕机至18点恢复', color: 'red' }],
+  },
+  {
+    date: new Date("2025-03-28T17:00:00+08:00"),
+    type: 'dot',
+    tooltip: [{ text: '17-23点宕机', color: 'red' }],
   }
 ])
 
